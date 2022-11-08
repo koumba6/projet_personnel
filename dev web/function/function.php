@@ -33,6 +33,8 @@ function generateMatricule($n=3) {
     
     
     try{
+      session_start();
+
         $sql=$this->db->prepare('SELECT * FROM user_web WHERE  email=:email');
         $sql->bindParam(":email",$email);
         $sql->execute();
@@ -46,14 +48,13 @@ function generateMatricule($n=3) {
              if ($donnee["etat"] == 1){
               //var_dump($donnee);die;
               if(password_verify($motdepasse, $donnee["motdepasse"]) ){
-                session_start();
                 //var_dump($donnee['motdepasse']);die;
                 if($donnee["roles"] == "admin"){
+                  $_SESSION['photo']= $donnee["photo"];
                   $_SESSION['matricule']= $donnee["matricule"];
                   $_SESSION['prenom']= $donnee["prenom"];
                   $_SESSION['nom']= $donnee["nom"];
-
-                  $_POST['roles_em'];
+                  
                   header('location:admin.php');
 
                 }elseif($donnee["roles"] == "user"){
@@ -72,13 +73,14 @@ function generateMatricule($n=3) {
   
      
           }
-  public function inscription($nom,$prenom,$matricule,$email,$roles,$motdepasse){
+
+  public function inscription($nom,$prenom,$matricule,$email,$roles,$photo,$motdepasse){
   $dates = date('Y-m-d'); 
   $etat = 1; 
 
     try{
-        $sql=$this->db->prepare('INSERT INTO user_web ( nom, prenom, matricule, email, roles,motdepasse )
-                               VALUES (:nom, :prenom, :matricule, :email, :roles,:motdepasse )');
+        $sql=$this->db->prepare('INSERT INTO user_web ( nom, prenom, matricule, email, roles, photo, motdepasse)
+                               VALUES (:nom, :prenom, :matricule, :email, :roles,:photo, :motdepasse )');
                              
 
         $checkMail=$this->db->prepare('SELECT email from user_web where email=:email');
@@ -98,8 +100,9 @@ function generateMatricule($n=3) {
             'matricule' =>$matricule, 
              'email'=>$email,
              'roles'=>$roles,
+             'photo'=>$photo,
              'motdepasse'=>$motdepasse,
-             
+            
  
  
          ));

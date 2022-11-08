@@ -42,7 +42,8 @@ $email = $_POST['email_em'];
 
 
 ?>
-<!-- <a href="admin.php"><i class="fa-solid fa-arrow-left-long d-flex">Retour</i></a> -->
+<button type="submit" class="btn btn-success " id="submit" name="submit"> <a style="color:white; text-decoration:none;" href="admin.php">Retour</a> </button>
+
 
 <div class="container  justify-content-center " style="width: 30%;">
   <form  class="row g-1 d-flex  m-5 bg-white needs-validation" action="" method="POST" id="Mylogin" novalidate>

@@ -10,13 +10,17 @@ if (isset($_POST['nom'], $_POST['prenom'], $_POST['email']  ,$_POST['roles'],$_P
   $email = $_POST['email'];
   $motdepasse = password_hash( $_POST['motdepasse'], PASSWORD_DEFAULT);
   $roles = $_POST['roles'];
+
+  if (!empty($_FILES['photo'])) {
+    $photo= file_get_contents($_FILES["photo"]["tmp_name"]) ?? null;
+  }
   
 
   $requeste = new WebUSER();
 
   $matricule = $requeste->generateMatricule();
   
-  $requeste->inscription($nom, $prenom,$matricule, $email, $roles, $motdepasse,);
+  $requeste->inscription($nom, $prenom,$matricule, $email, $roles, $photo, $motdepasse,);
  /*  var_dump($fatou);die; */
 }
 
@@ -36,7 +40,7 @@ if (isset($_POST['nom'], $_POST['prenom'], $_POST['email']  ,$_POST['roles'],$_P
 
 <body>
   <div class="container d-flex justify-content-center " >
-  <form  class="row g-1 d-flex  m-5 bg-white needs-validation" action="inscription.php" method="POST" id="Mylogin" novalidate>
+  <form  class="row g-1 d-flex  m-5 bg-white needs-validation" action="inscription.php" method="POST" id="Mylogin" novalidate enctype="multipart/form-data">
   
       <legend class="text-success d-flex justify-content-center">FORMULAIRE D'INSCRIPTION</legend>
 
@@ -93,10 +97,10 @@ if (isset($_POST['nom'], $_POST['prenom'], $_POST['email']  ,$_POST['roles'],$_P
         
       
       </div>
-      <!-- <div class="mb-3 col-md-3">
+       <div class="mb-3 col-md-3">
         <label for="photo" class="form-label">photo</label>
         <input type="file" name="photo" id="validation07" class="form-control" placeholder="photo">
-      </div> -->
+      </div> 
       <div class="">
       <button type="submit" class="btn btn-success" id="submit" name="submit">S'inscrire</button>
       <a style="float:right;" href="connexion.php" style="text-decoration:none;">connectez-vous?</a>
