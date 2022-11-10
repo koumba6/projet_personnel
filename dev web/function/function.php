@@ -59,6 +59,10 @@ function generateMatricule($n=3) {
 
                 }elseif($donnee["roles"] == "user"){
                   
+                  $_SESSION['photo']= $donnee["photo"];
+                  $_SESSION['matricule']= $donnee["matricule"];
+                  $_SESSION['prenom']= $donnee["prenom"];
+                  $_SESSION['nom']= $donnee["nom"];
                   header('location:user.php');
                 }
               }
